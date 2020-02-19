@@ -10,6 +10,10 @@ public class LaserPointer : MonoBehaviour
     public SteamVR_Behaviour_Pose controllerPose;
     public SteamVR_Action_Boolean teleportAction;
 
+    public SteamVR_Action_Boolean menuAction;
+    private bool menuOpen = false;
+    public LayerMask menuMask;
+
     public GameObject laserPrefab; // 1
     private GameObject laser; // 2
     private Transform laserTransform; // 3
@@ -49,8 +53,8 @@ public class LaserPointer : MonoBehaviour
 
     }
 
-    // Update is called once per frame
-    void Update()
+    
+    private void HandleTeleport()
     {
         // 1
         if (teleportAction.GetState(handType))
@@ -70,19 +74,45 @@ public class LaserPointer : MonoBehaviour
                 // 3
                 shouldTeleport = true;
             }
-        }
-        else // 3
-        {
-            laser.SetActive(false);
-            reticle.SetActive(false);
-        }
 
+        }
+       
         if (teleportAction.GetStateUp(handType) && shouldTeleport)
         {
             Teleport();
         }
+    }
 
+    private void HandleMenu()
+    {
+        
+        if (menuAction.GetState(handType))
+        {
+            Debug.Log("UIpress");
+            RaycastHit hit;
 
+            // 2
+            if (Physics.Raycast(controllerPose.transform.position, transform.forward, out hit, 100, menuMask))
+            {
+                Debug.Log("UIpress raycreate");
+                hitPoint = hit.point;
+                ShowLaser(hit);
+                menuOpen = true;
+            }
+            Debug.Log(hit.point);
+
+        }
+    }
+
+    void Update()
+    {
+        HandleTeleport();
+        HandleMenu();
+
+        if(!shouldTeleport)
+            reticle.SetActive(false);
+        if (!shouldTeleport && !menuOpen)
+            laser.SetActive(false);
     }
 
     private void ShowLaser(RaycastHit hit)
