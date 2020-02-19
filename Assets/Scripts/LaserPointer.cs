@@ -88,18 +88,18 @@ public class LaserPointer : MonoBehaviour
         
         if (menuAction.GetState(handType))
         {
-            Debug.Log("UIpress");
+            //Debug.Log("UIpress");
             RaycastHit hit;
 
             // 2
             if (Physics.Raycast(controllerPose.transform.position, transform.forward, out hit, 100, menuMask))
             {
-                Debug.Log("UIpress raycreate");
+                //Debug.Log("UIpress raycreate");
                 hitPoint = hit.point;
                 ShowLaser(hit);
                 menuOpen = true;
             }
-            Debug.Log(hit.point);
+            
 
         }
     }
