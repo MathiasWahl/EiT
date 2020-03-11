@@ -291,7 +291,7 @@ public class PhotonEditor : EditorWindow
     {
         if (BackgroundImage == null)
         {
-            BackgroundImage = AssetDatabase.LoadAssetAtPath("Assets/Photon Unity Networking/Editor/PhotonNetwork/background.png", typeof(Texture2D)) as Texture2D;
+            BackgroundImage = AssetDatabase.LoadAssetAtPath("Assets/Photon Unity Networking/Editor/PhotonNetwork/background.jpg", typeof(Texture2D)) as Texture2D;
         }
 
         PhotonSetupStates oldGuiState = this.photonSetupState; // used to fix an annoying Editor input field issue: wont refresh until focus is changed.

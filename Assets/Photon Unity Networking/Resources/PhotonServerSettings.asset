@@ -29,10 +29,7 @@ MonoBehaviour:
   RunInBackground: 1
   RpcList:
   - Chat
-  - ColorRpc
   - DestroyRpc
-  - DoJump
-  - Flash
   - InstantiateRpc
   - Marco
   - PickupItemInit
