@@ -10,9 +10,13 @@ public class VRInputModule : BaseInputModule
     public Camera m_Camera;
     public SteamVR_Input_Sources m_TargetSource;
     public SteamVR_Action_Boolean m_ClickAction;
+    public SteamVR_Action_Boolean m_MenuAction;
 
     private GameObject m_currentObject = null;
     private PointerEventData m_Data = null;
+
+    private bool menuActive = true;
+    public GameObject menuObject;
 
     protected override void Awake()
     {
@@ -50,6 +54,8 @@ public class VRInputModule : BaseInputModule
 
     private void ProcessPress(PointerEventData data)
     {
+
+
         data.pointerPressRaycast = data.pointerCurrentRaycast;
 
         GameObject newPointerPress = ExecuteEvents.ExecuteHierarchy(m_currentObject, data, ExecuteEvents.pointerDownHandler);
@@ -76,5 +82,29 @@ public class VRInputModule : BaseInputModule
         data.pressPosition = Vector2.zero;
         data.pointerPress = null;
         data.rawPointerPress = null;
+    }
+
+    private void Update()
+    {
+        //turn menu on/of
+        if (m_MenuAction.GetStateDown(m_TargetSource))
+        {
+            ToggleActive();
+        }
+    }
+
+    public void ToggleActive()
+    {
+        if (menuActive)
+        {
+            menuObject.SetActive(false);
+            menuActive = false;
+        }
+        else
+        {
+            menuObject.SetActive(true);
+            menuActive = true;
+        }
+
     }
 }
