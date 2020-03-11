@@ -10,6 +10,7 @@ public class ScalingGrip : MonoBehaviour
     private float initDistance, currentDistance, p_diff;
     private bool set_distance = true;
     public float scalingVariable = 0.1f, max_scale = 1, min_scale=0.1f;
+    public GameObject dot_left, dot_right;
     private Vector3 one = new Vector3(1, 1, 1);
 
 
@@ -24,15 +25,15 @@ public class ScalingGrip : MonoBehaviour
     {
         if(leftHand.objectInHand != null && (leftHand.objectInHand == rightHand.objectInHand))
         {
+        
             if (set_distance)
             {
                 set_distance = false;
-                initDistance = Vector3.Distance(leftHand.transform.localPosition, rightHand.transform.localPosition);
+                initDistance = Vector3.Distance(dot_left.transform.localPosition, dot_right.transform.localPosition);
 
             }
-            currentDistance = Vector3.Distance(leftHand.transform.localPosition, rightHand.transform.localPosition);
+            currentDistance = Vector3.Distance(dot_left.transform.localPosition, dot_right.transform.localPosition);
             p_diff = currentDistance - initDistance;
-            Debug.Log(p_diff);
             scalingObject = leftHand.objectInHand;
             if ((scalingObject.transform.localScale.x > min_scale && p_diff < 0) || (scalingObject.transform.localScale.x < max_scale && p_diff > 0)) {
                 scalingObject.transform.localScale = p_diff * scalingVariable * one + scalingObject.transform.localScale;

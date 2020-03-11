@@ -11,6 +11,8 @@ public class ControllerGrabObject : MonoBehaviour
     private GameObject collidingObject; // 1
     public GameObject objectInHand; // 2
 
+    public static bool grab = false;
+
     private void SetCollidingObject(Collider col)
     {
         //objectInHand.transform.localScale *= new Vector3(x, y, z);
@@ -91,6 +93,7 @@ public class ControllerGrabObject : MonoBehaviour
         {
             if (collidingObject)
             {
+                grab = true;
                 GrabObject();
                 //objectInHand.transform.localScale = objectInHand.transform.localScale * 2;
             }
@@ -101,9 +104,10 @@ public class ControllerGrabObject : MonoBehaviour
         {
             if (objectInHand)
             {
+                
                 //objectInHand.transform.localScale = objectInHand.transform.localScale / 2;
                 ReleaseObject();
-
+                grab = false;
             }
         }
 

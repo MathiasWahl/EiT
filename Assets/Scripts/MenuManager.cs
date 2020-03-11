@@ -5,7 +5,6 @@ using UnityEngine;
 public class MenuManager : MonoBehaviour
 {
     public Panel currentPanel = null;
-    private bool active = false;
 
     private List<Panel> panelHistory = new List<Panel>();
 
@@ -25,9 +24,11 @@ public class MenuManager : MonoBehaviour
         currentPanel.Show();
     }
 
+
+
     public void Update()
     {
-        //poll meny_knapp
+        
     }
 
 }
