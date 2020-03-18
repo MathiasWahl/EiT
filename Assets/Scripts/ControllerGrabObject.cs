@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Valve.VR;
 
-public class ControllerGrabObject : MonoBehaviour
+public class ControllerGrabObject : Photon.MonoBehaviour
 {
     public SteamVR_Input_Sources handType;
     public SteamVR_Behaviour_Pose controllerPose;
@@ -52,6 +52,7 @@ public class ControllerGrabObject : MonoBehaviour
     {
         // 1
         objectInHand = collidingObject;
+        objectInHand.GetComponent<PhotonView>().TransferOwnership(PhotonNetwork.player.ID);
         collidingObject = null;
         // 2
         var joint = AddFixedJoint();
