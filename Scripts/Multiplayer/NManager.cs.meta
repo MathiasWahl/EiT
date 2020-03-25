@@ -4,8 +4,7 @@ MonoImporter:
   externalObjects: {}
   serializedVersion: 2
   defaultReferences:
-  - headPrefab: {fileID: 3362161565017590790, guid: 07b4f5af187522944b9667d880265789,
-      type: 3}
+  - headPrefab: {fileID: 100004, guid: b77f122f451a2394898a24191c26107c, type: 3}
   - leftHandPrefab: {fileID: 727841558502661125, guid: 3233e1d3a844d4d4abf0fba5c41d2ec3,
       type: 3}
   - rightHandPrefab: {fileID: 2234675205882681234, guid: dcba60dc558d88d4693e5cfcc49d1a2e,

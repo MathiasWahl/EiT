@@ -5,7 +5,7 @@ using UnityEngine;
 public class MenuButtonActions : Photon.MonoBehaviour
 {
 
-    public GameObject spawnObject;
+    // public GameObject spawnObject;
     public Transform cameraRigTransform;
     public Vector3 model_position = new Vector3(590, 2.96f, -18);
     public Vector3 office_position = new Vector3(0, 0, 0);
@@ -20,8 +20,9 @@ public class MenuButtonActions : Photon.MonoBehaviour
 
     public void SpawnCubeButton()
     {
-        PhotonNetwork.Instantiate("Online Cube", new Vector3(0, 0, 0), Quaternion.identity, 0);
-        spawnObject.GetComponent<PhotonView>().TransferOwnership(PhotonNetwork.player.ID);
+        Debug.Log("Spawn cube!");
+        // PhotonNetwork.Instantiate("Online Cube", new Vector3(0, 0, 0), Quaternion.identity, 0);
+        // spawnObject.GetComponent<PhotonView>().TransferOwnership(PhotonNetwork.player.ID);
     }
 
     public void TeleportToOfficeButton()
