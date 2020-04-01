@@ -21,7 +21,7 @@ public class MenuButtonActions : Photon.MonoBehaviour
     public void SpawnCubeButton()
     {
         Debug.Log("Spawn cube!");
-        // PhotonNetwork.Instantiate("Online Cube", new Vector3(0, 0, 0), Quaternion.identity, 0);
+        PhotonNetwork.Instantiate("Online Cube", new Vector3(0.7f, 1.8f, 2.6f), Quaternion.identity, 0);
         // spawnObject.GetComponent<PhotonView>().TransferOwnership(PhotonNetwork.player.ID);
     }
 
