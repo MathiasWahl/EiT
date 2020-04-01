@@ -48,7 +48,7 @@ public class ControllerGrabObject : Photon.MonoBehaviour
         collidingObject = null;
     }
 
-    private void GrabObject()
+    public void GrabObject()
     {
         // 1
         objectInHand = collidingObject;
@@ -68,7 +68,7 @@ public class ControllerGrabObject : Photon.MonoBehaviour
         return fx;
     }
 
-    private void ReleaseObject()
+    public void ReleaseObject()
     {
         // 1
         if (GetComponent<FixedJoint>())
