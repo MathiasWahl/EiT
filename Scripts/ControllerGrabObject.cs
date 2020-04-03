@@ -11,7 +11,16 @@ public class ControllerGrabObject : Photon.MonoBehaviour
     private GameObject collidingObject; // 1
     public GameObject objectInHand; // 2
 
+    public SteamVR_Action_Boolean rotateActionLeft, rotateActionRight;
+    public GameObject visibleModel;
+    private Vector3 rotateChange = new Vector3(0, 2, 0);
+    
     public static bool grab = false;
+
+    public void setVisibleModel(GameObject model)
+    {
+        visibleModel = model;
+    }
 
     private void SetCollidingObject(Collider col)
     {
@@ -50,13 +59,17 @@ public class ControllerGrabObject : Photon.MonoBehaviour
 
     public void GrabObject()
     {
-        // 1
-        objectInHand = collidingObject;
-        objectInHand.GetComponent<PhotonView>().TransferOwnership(PhotonNetwork.player.ID);
-        collidingObject = null;
-        // 2
-        var joint = AddFixedJoint();
-        joint.connectedBody = objectInHand.GetComponent<Rigidbody>();
+        if (collidingObject != visibleModel)
+        {
+            // 1
+            objectInHand = collidingObject;
+            objectInHand.GetComponent<PhotonView>().TransferOwnership(PhotonNetwork.player.ID);
+            collidingObject = null;
+            // 2
+            var joint = AddFixedJoint();
+            joint.connectedBody = objectInHand.GetComponent<Rigidbody>();
+
+        }
     }
 
     // 3
@@ -79,7 +92,6 @@ public class ControllerGrabObject : Photon.MonoBehaviour
             // 3
             objectInHand.GetComponent<Rigidbody>().velocity = controllerPose.GetVelocity();
             objectInHand.GetComponent<Rigidbody>().angularVelocity = controllerPose.GetAngularVelocity();
-
         }
         // 4
         objectInHand = null;
@@ -89,6 +101,19 @@ public class ControllerGrabObject : Photon.MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
+        if (collidingObject == visibleModel)
+        {
+            if (rotateActionLeft.GetState(handType))
+            {
+                visibleModel.transform.Rotate(-rotateChange);
+            }
+            else if (rotateActionRight.GetState(handType))
+            {
+                visibleModel.transform.Rotate(rotateChange);
+            }
+        }
+
         // 1
         if (grabAction.GetLastStateDown(handType))
         {

@@ -11,7 +11,20 @@ public class MenuButtonActions : Photon.MonoBehaviour
     public Vector3 office_position = new Vector3(0, 0, 0);
     public GameObject visibleModel, hiddenModel;
     private bool house_model_showing = true;
+    private ControllerGrabObject left, right;
 
+    void Awake()
+    {
+        // get components
+        GameObject leftPointer = GameObject.Find("PR_pointer (left)");
+        GameObject rightPointer = GameObject.Find("PR_pointer (right)");
+        left = leftPointer.GetComponent<ControllerGrabObject>();
+        right = rightPointer.GetComponent<ControllerGrabObject>();
+
+        left.setVisibleModel(visibleModel);
+        right.setVisibleModel(visibleModel);
+        // set visibleModel
+    }
 
     public void TeleportToModelButton()
     {
@@ -59,6 +72,10 @@ public class MenuButtonActions : Photon.MonoBehaviour
 
         hiddenModel = pre_visible;
         visibleModel = pre_hidden;
+
+        left.setVisibleModel(visibleModel);
+        right.setVisibleModel(visibleModel);
+
 
     }
 
