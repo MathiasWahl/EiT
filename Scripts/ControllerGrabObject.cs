@@ -11,16 +11,12 @@ public class ControllerGrabObject : Photon.MonoBehaviour
     private GameObject collidingObject; // 1
     public GameObject objectInHand; // 2
 
-    public SteamVR_Action_Boolean rotateActionLeft, rotateActionRight;
-    public GameObject visibleModel;
+    public SteamVR_Action_Boolean rotateActionLeft, rotateActionRight, scaleActionNorth, scaleActionSouth;
+    // public GameObject visibleModel;
     private Vector3 rotateChange = new Vector3(0, 2, 0);
-    
-    public static bool grab = false;
+    public float scaleChange = 1.05f;
 
-    public void setVisibleModel(GameObject model)
-    {
-        visibleModel = model;
-    }
+    public static bool grab = false;
 
     private void SetCollidingObject(Collider col)
     {
@@ -59,11 +55,12 @@ public class ControllerGrabObject : Photon.MonoBehaviour
 
     public void GrabObject()
     {
-        if (collidingObject != visibleModel)
+        if (collidingObject != MenuButtonActions.visibleModel)
         {
             // 1
             objectInHand = collidingObject;
             objectInHand.GetComponent<PhotonView>().TransferOwnership(PhotonNetwork.player.ID);
+            objectInHand.GetComponent<Rigidbody>().useGravity = false;
             collidingObject = null;
             // 2
             var joint = AddFixedJoint();
@@ -90,6 +87,7 @@ public class ControllerGrabObject : Photon.MonoBehaviour
             GetComponent<FixedJoint>().connectedBody = null;
             Destroy(GetComponent<FixedJoint>());
             // 3
+            objectInHand.GetComponent<Rigidbody>().useGravity = true;
             objectInHand.GetComponent<Rigidbody>().velocity = controllerPose.GetVelocity();
             objectInHand.GetComponent<Rigidbody>().angularVelocity = controllerPose.GetAngularVelocity();
         }
@@ -102,15 +100,23 @@ public class ControllerGrabObject : Photon.MonoBehaviour
     void Update()
     {
 
-        if (collidingObject == visibleModel)
+        if (collidingObject == MenuButtonActions.visibleModel)
         {
             if (rotateActionLeft.GetState(handType))
             {
-                visibleModel.transform.Rotate(-rotateChange);
+                MenuButtonActions.visibleModel.transform.Rotate(-rotateChange);
             }
             else if (rotateActionRight.GetState(handType))
             {
-                visibleModel.transform.Rotate(rotateChange);
+                MenuButtonActions.visibleModel.transform.Rotate(rotateChange);
+            }
+            else if (scaleActionNorth.GetState(handType) && MenuButtonActions.visibleModel.transform.localScale[0] < 1)
+            {
+                MenuButtonActions.visibleModel.transform.localScale = MenuButtonActions.visibleModel.transform.localScale * scaleChange;
+            }
+            else if (scaleActionSouth.GetState(handType) && MenuButtonActions.visibleModel.transform.localScale[0] > 0.1f)
+            {
+                MenuButtonActions.visibleModel.transform.localScale = MenuButtonActions.visibleModel.transform.localScale / scaleChange;
             }
         }
 

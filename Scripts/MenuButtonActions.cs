@@ -9,9 +9,14 @@ public class MenuButtonActions : Photon.MonoBehaviour
     public Transform cameraRigTransform;
     public Vector3 model_position = new Vector3(590, 2.96f, -18);
     public Vector3 office_position = new Vector3(0, 0, 0);
-    public GameObject visibleModel, hiddenModel;
+    private Vector3 office_model_position = new Vector3(0, 1.034f, 2.75f);
+    private Vector3 homemade_model_position = new Vector3(-1004, 4.2f, 11);
+    public static GameObject visibleModel, hiddenModel;
+    public GameObject set_visible, set_hidden;
     private bool house_model_showing = true;
     private ControllerGrabObject left, right;
+    private GameObject toy_model;
+
 
     void Awake()
     {
@@ -20,10 +25,9 @@ public class MenuButtonActions : Photon.MonoBehaviour
         GameObject rightPointer = GameObject.Find("PR_pointer (right)");
         left = leftPointer.GetComponent<ControllerGrabObject>();
         right = rightPointer.GetComponent<ControllerGrabObject>();
+        visibleModel = set_visible;
+        hiddenModel = set_hidden;
 
-        left.setVisibleModel(visibleModel);
-        right.setVisibleModel(visibleModel);
-        // set visibleModel
     }
 
     public void TeleportToModelButton()
@@ -35,7 +39,7 @@ public class MenuButtonActions : Photon.MonoBehaviour
         }
         else
         {
-            teleport_position = new Vector3(100, 100, 100);
+            teleport_position = homemade_model_position;
         }
         Debug.Log("Scenes work");
         // get camera rig, change position
@@ -44,8 +48,13 @@ public class MenuButtonActions : Photon.MonoBehaviour
 
     public void SpawnCubeButton()
     {
-        Debug.Log("Spawn cube!");
-        PhotonNetwork.Instantiate("Online Cube", new Vector3(0.7f, 1.8f, 2.6f), Quaternion.identity, 0);
+        // if toy model, destroy
+        toy_model = PhotonNetwork.Instantiate(visibleModel.name, new Vector3(-2, 1.7f, 4.4f), Quaternion.identity, 0);
+        toy_model.SetActive(true);
+        Rigidbody rigid_body = toy_model.GetComponent<Rigidbody>();
+        rigid_body.useGravity = true;
+        rigid_body.constraints = RigidbodyConstraints.None;
+
         // spawnObject.GetComponent<PhotonView>().TransferOwnership(PhotonNetwork.player.ID);
     }
 
@@ -63,7 +72,7 @@ public class MenuButtonActions : Photon.MonoBehaviour
         pre_visible.SetActive(false); // hide visible object
 
         
-        pre_hidden.transform.position = new Vector3(0, 1, 2.4f);
+        pre_hidden.transform.position = office_model_position;
         pre_hidden.transform.rotation = Quaternion.identity;
         pre_hidden.SetActive(true); // make hidden model visible;
 
@@ -72,9 +81,6 @@ public class MenuButtonActions : Photon.MonoBehaviour
 
         hiddenModel = pre_visible;
         visibleModel = pre_hidden;
-
-        left.setVisibleModel(visibleModel);
-        right.setVisibleModel(visibleModel);
 
 
     }
