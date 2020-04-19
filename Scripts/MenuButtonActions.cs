@@ -72,6 +72,9 @@ public class MenuButtonActions : Photon.MonoBehaviour
         GameObject pre_hidden = hiddenModel;
 
         // set visibility:
+        pre_visible.GetComponent<PhotonView>().TransferOwnership(PhotonNetwork.player.ID);
+        pre_hidden.GetComponent<PhotonView>().TransferOwnership(PhotonNetwork.player.ID);
+
         pre_visible.SetActive(false); // hide visible object
 
         
