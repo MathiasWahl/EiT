@@ -46,10 +46,13 @@ public class MenuButtonActions : Photon.MonoBehaviour
         cameraRigTransform.position = teleport_position;
     }
 
-    public void SpawnCubeButton()
+    public void SpawnToyModelButton()
     {
-        // if toy model, destroy
-        toy_model = PhotonNetwork.Instantiate(visibleModel.name, new Vector3(-2, 1.7f, 4.4f), Quaternion.identity, 0);
+        if (toy_model != null)
+        {
+            PhotonNetwork.Destroy(toy_model);
+        }
+        toy_model = PhotonNetwork.Instantiate(visibleModel.name, new Vector3(-2.9f, 1.4f, 6.77f), Quaternion.identity, 0);
         toy_model.SetActive(true);
         Rigidbody rigid_body = toy_model.GetComponent<Rigidbody>();
         rigid_body.useGravity = true;
