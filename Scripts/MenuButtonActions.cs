@@ -9,7 +9,7 @@ public class MenuButtonActions : Photon.MonoBehaviour
     public Transform cameraRigTransform;
     public Vector3 model_position = new Vector3(590, 2.96f, -18);
     public Vector3 office_position = new Vector3(0, 0, 0);
-    private Vector3 office_model_position = new Vector3(6.294f, 1.044f, 2.91f);
+    private Vector3 office_model_position = new Vector3(-0.164f, 1.044f, 5.529f);
     private Vector3 homemade_model_position = new Vector3(-1004, 4.2f, 11);
     public static GameObject visibleModel, hiddenModel;
     public GameObject set_visible, set_hidden;
@@ -53,6 +53,7 @@ public class MenuButtonActions : Photon.MonoBehaviour
             PhotonNetwork.Destroy(toy_model);
         }
         toy_model = PhotonNetwork.Instantiate(visibleModel.name, new Vector3(-7.79f, 1.4f, 3.09f), Quaternion.identity, 0);
+        toy_model.GetComponent<PhotonView>().TransferOwnership(PhotonNetwork.player.ID);
         toy_model.SetActive(true);
         Rigidbody rigid_body = toy_model.GetComponent<Rigidbody>();
         rigid_body.useGravity = true;
