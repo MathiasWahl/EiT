@@ -9,7 +9,7 @@ public class MenuButtonActions : Photon.MonoBehaviour
     public Transform cameraRigTransform;
     public Vector3 model_position = new Vector3(590, 2.96f, -18);
     public Vector3 office_position = new Vector3(0, 0, 0);
-    private Vector3 office_model_position = new Vector3(0, 1.034f, 2.75f);
+    private Vector3 office_model_position = new Vector3(6.294f, 1.044f, 2.91f);
     private Vector3 homemade_model_position = new Vector3(-1004, 4.2f, 11);
     public static GameObject visibleModel, hiddenModel;
     public GameObject set_visible, set_hidden;
@@ -52,7 +52,7 @@ public class MenuButtonActions : Photon.MonoBehaviour
         {
             PhotonNetwork.Destroy(toy_model);
         }
-        toy_model = PhotonNetwork.Instantiate(visibleModel.name, new Vector3(-2.9f, 1.4f, 6.77f), Quaternion.identity, 0);
+        toy_model = PhotonNetwork.Instantiate(visibleModel.name, new Vector3(-7.79f, 1.4f, 3.09f), Quaternion.identity, 0);
         toy_model.SetActive(true);
         Rigidbody rigid_body = toy_model.GetComponent<Rigidbody>();
         rigid_body.useGravity = true;
@@ -68,22 +68,24 @@ public class MenuButtonActions : Photon.MonoBehaviour
 
     public void ChangeModelButton()
     {
+
         GameObject pre_visible = visibleModel;
         GameObject pre_hidden = hiddenModel;
 
-        // set visibility:
+        // transfer ownership:
         pre_visible.GetComponent<PhotonView>().TransferOwnership(PhotonNetwork.player.ID);
         pre_hidden.GetComponent<PhotonView>().TransferOwnership(PhotonNetwork.player.ID);
 
-        pre_visible.SetActive(false); // hide visible object
 
-        
+        // hide visible object
+        pre_visible.SetActive(false);
+
+
         pre_hidden.transform.position = office_model_position;
         pre_hidden.transform.rotation = Quaternion.identity;
         pre_hidden.SetActive(true); // make hidden model visible;
 
         house_model_showing = !house_model_showing;
-
 
         hiddenModel = pre_visible;
         visibleModel = pre_hidden;
